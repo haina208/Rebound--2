@@ -1,0 +1,22 @@
+%matplotlib inline
+import rebound
+import numpy
+import matplotlib.pyplot as plt
+from IPython.display import display, clear_output
+
+sim = rebound.Simulation()
+rebound.data.add_solar_system(sim)
+
+#sim.add(m=0.5, x=10000., vy=1.)
+sim.add(e=0.967, a=17.94, inc=162.2)
+print(sim.status())
+sim.move_to_com()
+
+op = rebound.OrbitPlot(sim)
+fig = op.fig
+for i in range(100):
+    op.sim.integrate(sim.t+0.31)
+    op.update()
+    display(fig)
+    plt.close(fig)
+    clear_output(wait=True)
